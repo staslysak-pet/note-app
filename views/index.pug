@@ -1,0 +1,34 @@
+html
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport" content="width=device-width, initial-scale=1.0")
+        link(rel="stylesheet", href="css/main.css")
+        link(rel="stylesheet", href="css/dark-mode.css" id='darkMode' disabled)
+        link(rel="stylesheet", href="css/fontawesome.css")
+        title= title
+        body
+            #creater
+                .createHeader.header(hidden contenteditable="true" placeholder="Enter note header" role="textbox")
+                #createBtns
+                    .createNote.noteText(hidden=false contenteditable="true" placeholder="Add quick note..." role="textbox" style='font-size:16px;')
+                    .createList.far.fa-list-ul(hidden=false role='button' title="Create List")
+                #list.listCont(hidden)                   
+                    .listEl(role='createListEl')
+                        .checkEl(aria-label='addTodo')
+                        .textEl(contenteditable="true" placeholder="New TODO" role="textbox" aria-label="newTodo")
+                        .delEl
+
+                #controls.controls(hidden)
+                    .toolbar
+                        .toolbarBtn.setTime(aria-label='time')
+                    div
+                        .defaultBtn.add Add
+                        .defaultBtn.cancel Cancel
+            #switchMode.fas.fa-tools
+
+            include noteContainer
+
+        script(src="js/main.js")
+        script(src="js/dark-mode.js")
+        script(src="js/data_handler.js")
+            

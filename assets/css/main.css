@@ -1,0 +1,340 @@
+body,
+html,
+div{
+    font-family: Helvetica, Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #777;
+    font-size: 16px;
+    background: #fff;
+}
+
+#creater {
+    width: 90%;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+    background: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px -2px #bbb;
+    margin: 20px auto;
+    /* padding: 12px 20px; */
+    padding: 10px 20px;
+    transition: box-shadow .2s, transform 190ms;
+}
+#creater:hover{
+    box-shadow: 0 0 10px -2px #bbb, 0 8px 10px -6px #aaa;
+    transform: scale(1.09);
+}
+.note:hover{
+    box-shadow: 0 0 10px -2px #ccc, 0 8px 10px -6px #aaa;
+}
+#createBtns {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+[contenteditable]:empty:before {
+    content: attr(placeholder);
+    cursor: text;
+}
+
+[contenteditable]{
+    outline: none;
+}
+[contenteditable] div{
+    font-size: 14px;
+}
+[contenteditable]::-webkit-scrollbar {
+    width: 7px;
+}
+
+[contenteditable]::-webkit-scrollbar-thumb {
+    background: #777;
+}
+
+.listCont::-webkit-scrollbar {
+    width: 7px;
+}
+
+.listCont::-webkit-scrollbar-thumb {
+    background: #777;
+}
+
+[hidden] {
+    display: none !important;
+}
+
+.createNote {
+    /* width: 100%; */
+    font-size: 16px;
+    /* background: #000; */
+    /* font-weight: 300; */
+    /* margin: -12px 0; */
+    /* padding: 12px 0; */
+}
+
+.createList {
+    font-family: "Font Awesome 5 Free";
+    font-size: 18px;
+    cursor: pointer;
+    padding: 10px;
+    margin: -10px;
+}
+.createList::before {
+    font-weight: 900;
+}
+
+.toolbar {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
+.toolbarBtn {
+    font-family: "Font Awesome 5 Free";
+    font-size: 16px;
+    cursor: pointer;
+    margin: -7px;
+    padding: 10px;
+    transition: box-shadow .2s, transform .2s;
+}
+
+.toolbarBtn:hover {
+    color: #333;
+    transform: translateY(3px)
+}
+
+.toolbarBtn[aria-label='time']:before {
+    content: "\f0f3";
+}
+
+.toolbarBtn[aria-label='delete']:before {
+    content: "\f2ed";
+}
+
+.setTime {
+    margin-right: 10px;  
+}
+
+.defaultBtn {
+    display: inline-block;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 10px 20px;
+    border-radius: 7.5px;
+}
+
+.add,
+.edit {
+    margin-right: 5px;
+    color: rgb(235, 235, 235);
+    background: linear-gradient(45deg, rgba(11, 224, 178, .5), rgba(20, 128, 179, .5));
+    transition: box-shadow .2s;
+}
+
+.edit{
+    margin: 0;
+}
+
+.add:hover,
+.edit:hover {
+    background: linear-gradient(45deg, rgba(11, 224, 178, 1), rgba(20, 128, 179, 1));
+    box-shadow: 0 0 10px -2px #ccc, 0 8px 10px -6px #aaa;
+}
+
+.cancel:hover {
+    background: #eee;
+}
+
+.notesCont{
+    padding-bottom: 90px;
+}
+
+.listCont {
+    width: 100%;
+    max-height: 300px;
+    overflow-x: hidden;
+
+    margin: -10px 0;
+    padding: 7px 0;
+}
+
+.listEl {
+    width: 97.5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+
+    padding: 1.5px 0;
+
+    box-sizing: border-box;
+    border: 1.5px solid transparent;
+    overflow: hidden;
+}
+
+.listEl:hover {
+    border-top-color: #ddd;
+    border-bottom-color: #ddd;
+}
+
+.listEl:not([role='createListEl']):hover .delEl {
+    display: block;
+}
+.checkEl, .delEl{
+    font-family: 'Font Awesome 5 Free';
+    font-size: 14px;
+    padding: 5px;
+    align-self: flex-start;
+    /* font-size: 16px; */
+}
+.checkEl {
+    font-weight: 400;
+}
+
+.checkEl[aria-checked]:hover {
+    cursor: pointer;
+    color: #333;
+}
+
+.checkEl[aria-checked='false']:before {
+    content: '\f0c8';
+}
+
+.checkEl[aria-checked='true']:before {
+    content: '\f14a';
+}
+
+.checkEl[aria-label='addTodo']:before {
+    content: '\f067';
+    font-weight: 600;
+}
+
+.checkEl[aria-checked='true']+.textEl {
+    text-decoration: line-through;
+}
+
+.textEl {
+    width: 100%;
+    min-width: 0;
+    font-size: 14px;
+    font-weight: 300;
+    padding: 4px 7px;
+}
+
+.textEl[aria-label='listText']:focus+.delEl {
+    display: block;
+}
+
+.delEl {
+    display: none;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.delEl:before {
+    content: '\f00d';
+}
+
+.delEl:hover {
+    color: #333;
+}
+
+.note {
+    width: 90%;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: center;
+    box-sizing: border-box;
+    border-radius: 5px;
+    background: #fff;
+    box-shadow: 0 0 10px -2px #bbb;
+    margin: 20px auto;
+    /* padding: 12px 20px; */
+    padding: 10px 20px;
+    transition: box-shadow .2s, transform .2s;
+}
+
+.header {
+    width: 100%;
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 15px;
+
+    padding: 5px 0;
+}
+
+.controls {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    /* margin-top: 10px; */
+    margin-top: 25px;
+}
+
+.noteText {
+    width: 100%;
+    max-height: 300px;
+    font-size: 14px;
+    font-weight: 300;
+    overflow-x: hidden;
+    /* margin-bottom: 15px; */
+    margin: -10px 0;
+    padding: 12px 0;
+}
+
+.no-note{
+    position: fixed;
+    left: 50%;
+    top: 50%;
+
+    background: transparent;
+
+    text-align: center;
+    font-size: 80px;
+    transform: translate(-50%, -50%);
+}
+
+.no-note::before{
+    content: '\f4da';
+    font-family: "Font Awesome 5 Free";
+}
+
+.phrase{
+    font-size: 22px;
+    margin-top: 10px;
+}
+
+#switchMode{
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    font-size: 25px;
+    cursor: pointer;
+    border-radius: 50%;
+    box-shadow: 0 0 10px -2px #bbbb, inset 0  0 5px #bbb;
+}
+#switchMode::before{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+#switchMode:hover{
+    box-shadow: 0 0 15px -2px #bbb, inset 0  0 5px #bbb;
+}

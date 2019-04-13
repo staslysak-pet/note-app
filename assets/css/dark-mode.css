@@ -1,0 +1,41 @@
+body,
+html,
+div,
+.note,
+#creater{
+    background: rgb(22, 22, 22);
+}
+.note,
+#creater{
+    -webkit-box-shadow: 0 0 10px -2px #555;
+            box-shadow: 0 0 10px -2px #555
+}
+
+#creater:hover{
+    -webkit-box-shadow: 0 0 10px -2px #ccc, 0 8px 10px -6px #aaa;
+            box-shadow: 0 0 10px -2px #ccc, 0 8px 10px -6px #aaa;
+    -webkit-transform: scale(1.09);
+            transform: scale(1.09)
+}
+
+.note:hover{
+    -webkit-box-shadow: 0 0 10px -2px #ccc, 0 8px 10px -6px #aaa;
+            box-shadow: 0 0 10px -2px #ccc, 0 8px 10px -6px #aaa;
+}
+
+.cancel:hover {
+    background: #222;
+}
+
+.listEl:hover {
+    border-top-color: #777;
+    border-bottom-color: #777;
+}
+
+#switchMode{
+    -webkit-box-shadow: 0 0 10px -2px #555, inset 0  0 5px #555;
+            box-shadow: 0 0 10px -2px #555, inset 0  0 5px #555;
+}
+#switchMode:hover{
+    box-shadow: 0 0 15px -2px #555, inset 0  0 5px #555;
+}
