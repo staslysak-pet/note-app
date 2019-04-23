@@ -3,9 +3,9 @@
 
 
         if item.type == 'note'
-            .note(data-type=`${item.type}` data-id=`${item['_id']}`)
-                .header(contenteditable="true" placeholder="Enter note header" role="textbox")= item.header
-                .noteText(contenteditable="true" placeholder="Add quick note..." role="textbox")= item.noteText
+            .note(data-type=`${item.type}` data-id=`${item['_id']}` tabindex='0')
+                .header(contenteditable='true' placeholder='Enter note header' role='textbox')= item.header
+                .noteText(contenteditable='true' placeholder='Add quick note...' role='textbox')= item.noteText
 
                 .controls
                     .toolbar
@@ -15,22 +15,22 @@
 
 
         if item.type == 'list'
-            .note(data-type=`${item.type}` data-id=`${item['_id']}`)
-                .header(contenteditable="true" placeholder="Enter note header" role="textbox")= item.header
+            .note(data-type=`${item.type}` data-id=`${item['_id']}` tabindex='0')
+                .header(contenteditable='true' placeholder='Enter note header' role='textbox')= item.header
                 .listCont
                     each list in item.list.normal
                         .listEl
                             .checkEl(aria-checked='false')
-                            .textEl(contenteditable="true" role="textbox" aria-label="listText")= list
+                            .textEl(contenteditable='true' role='textbox' aria-label='listText')= list
                             .delEl
                     each list in item.list.checked
                         .listEl
                             .checkEl(aria-checked='true')
-                            .textEl(contenteditable="true" role="textbox" aria-label="listText")= list
+                            .textEl(contenteditable='true' role='textbox' aria-label='listText')= list
                             .delEl
-                    .listEl(role='createListEl')
-                        .checkEl(aria-label='addTodo')
-                        .textEl(contenteditable="true" placeholder="New TODO" role="textbox" aria-label="newTodo")
+                    .listEl
+                        .checkEl
+                        .textEl(contenteditable='true' placeholder='New TODO' role='textbox' aria-label='newTodo')
                         .delEl
                         
                 .controls
@@ -39,7 +39,6 @@
                         .toolbarBtn.delete(aria-label='delete')
                     .defaultBtn.edit Edit
 
-                    
     else
         .no-note
             .phrase Any Ideas...!?

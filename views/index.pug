@@ -1,21 +1,21 @@
 html
     head
-        meta(charset="UTF-8")
-        meta(name="viewport" content="width=device-width, initial-scale=1.0")
-        link(rel="stylesheet", href="css/main.css")
-        link(rel="stylesheet", href="css/dark-mode.css" id='darkMode' disabled)
-        link(rel="stylesheet", href="css/fontawesome.css")
+        meta(charset='UTF-8')
+        meta(name='viewport' content='width=device-width, initial-scale=1.0')
+        link(rel='stylesheet', href='css/main.css')
+        link(rel='stylesheet', href='css/dark-mode.css' id='darkMode' disabled)
+        link(rel='stylesheet', href='css/fontawesome.css')
         title= title
         body
-            #creater
-                .createHeader.header(hidden contenteditable="true" placeholder="Enter note header" role="textbox")
+            #creater.note
+                .createHeader.header(hidden contenteditable='true' placeholder='Enter note header' role='textbox' tabindex='0')
                 #createBtns
-                    .createNote.noteText(hidden=false contenteditable="true" placeholder="Add quick note..." role="textbox" style='font-size:16px;')
-                    .createList.far.fa-list-ul(hidden=false role='button' title="Create List")
-                #list.listCont(hidden)                   
-                    .listEl(role='createListEl')
-                        .checkEl(aria-label='addTodo')
-                        .textEl(contenteditable="true" placeholder="New TODO" role="textbox" aria-label="newTodo")
+                    .createNote.noteText(hidden=false contenteditable='true' placeholder='Add quick note...' role='textbox')
+                    .createList.far.fa-list-ul(hidden=false role='button' title='Create List')
+                .listCont(hidden)                   
+                    .listEl
+                        .checkEl
+                        .textEl(contenteditable='true' placeholder='New TODO' role='textbox' aria-label='newTodo')
                         .delEl
 
                 #controls.controls(hidden)
@@ -26,9 +26,9 @@ html
                         .defaultBtn.cancel Cancel
             #switchMode.fas.fa-tools
 
-            include noteContainer
+            include notes
 
-        script(src="js/main.js")
-        script(src="js/dark-mode.js")
-        script(src="js/data_handler.js")
+        script(src='js/main.js')
+        script(src='js/dark-mode.js')
+        script(src='js/data.js')
             

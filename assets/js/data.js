@@ -1,43 +1,41 @@
 // PACK ALL DATA TO MONGO DATABASE
 function packData(note){
     
-    let type   = note;
-    let regex  = /<br\s*[\/]?>/gi;
-    let regex2 = /&nbsp;/gi;
+    const type = note.getAttribute('data-type');
+    const rExp  = /<br\s*[\/]?>/gi;
+    const rExp2 = /&nbsp;/gi;
 
-    if(type.dataset.type == 'note'){
-        let headerData   = note.querySelector('.header').innerText;
-        let noteTextData = note.querySelector('.noteText').innerHTML;
-        let typeData     = type.getAttribute('data-type');
-        let text = noteTextData.replace(regex2, '').replace(regex, "\n");
+    if(type === 'note'){
+        const headerData   = note.querySelector('.header').innerText;
+        const noteTextData = note.querySelector('.noteText').innerHTML;
+        const text = noteTextData.replace(rExp, '\n').replace(rExp2, '');
 
         return {
-            type: typeData,
+            type: type,
             header: headerData,
             noteText: text
         };
     }
-    if(type.dataset.type == 'list'){
-        let headerData = note.querySelector('.header').innerText;
-        let typeData   = type.getAttribute('data-type');
-        let lists      = note.querySelectorAll('.textEl:not([aria-label="newTodo"])');
+    if(type === 'list'){
+        const headerData = note.querySelector('.header').innerText;
+        const lists      = note.querySelectorAll('.textEl:not([aria-label="newTodo"])');
 
-        let normalArr  = [];
-        let checkedArr = [];
+        const normalArr  = [];
+        const checkedArr = [];
 
         for(let i = 0;i < lists.length; i++){
 
-            let text = lists[i].innerHTML.replace(regex, "\n").replace(regex2, '');
+            let text = lists[i].innerText;
 
-            if(lists[i].previousElementSibling.getAttribute('aria-checked') == 'true')
+            if(lists[i].previousElementSibling.getAttribute('aria-checked') === 'true'){
                 checkedArr.push(text);
-            else
+            }else{
                 normalArr.push(text);
-            
+            }
         }
 
         return {
-            type: typeData,
+            type: type,
             header: headerData,
             list: {
                 normal: normalArr,
@@ -68,8 +66,8 @@ async function putData(dataEl){
         }
 
         await fetch(`/${id}`, fetchObj)
-            .then(()=>window.location.href = '/')
-            .catch(err=>console.log(err))
+            .then(() => window.location.href = '/')
+            .catch(err => console.log(err))
     }catch(err){
         console.log(err)
     }
@@ -81,8 +79,8 @@ async function deleteData(dataEl){
         const id = await getNoteId(dataEl);
 
         await fetch(`/${id}`, {method: "DELETE"})
-            .then(()=>window.location.href = '/')
-            .catch(err=>console.log(err))
+            .then(() => window.location.href = '/')
+            .catch(err => console.log(err))
     }catch(err){
         console.log(err)
     }    
@@ -103,8 +101,8 @@ async function postData(dataEl){
         console.log(noteData);
 
         await fetch('/', fetchObj)
-            .then(()=>window.location.href = '/')
-            .catch(err=>console.log(err))
+            .then(() => window.location.href = '/')
+            .catch(err => console.log(err))
     }catch(err){
         console.log(err)
     }

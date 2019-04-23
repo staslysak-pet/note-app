@@ -72,11 +72,17 @@ div{
 
 .createNote {
     /* width: 100%; */
-    font-size: 16px;
+    font-size: 16px !important;
     /* background: #000; */
     /* font-weight: 300; */
     /* margin: -12px 0; */
     /* padding: 12px 0; */
+}
+#creater[data-type='note']  .createNote{
+    font-size: 14px !important;
+}
+#creater[data-type] ~ * > .no-note{
+    display: none;
 }
 
 .createList {
@@ -186,7 +192,7 @@ div{
     border-bottom-color: #ddd;
 }
 
-.listEl:not([role='createListEl']):hover .delEl {
+.listEl:not(:last-child):hover .delEl {
     display: block;
 }
 .checkEl, .delEl{
@@ -213,12 +219,12 @@ div{
     content: '\f14a';
 }
 
-.checkEl[aria-label='addTodo']:before {
+.checkEl:not([aria-checked]):before {
     content: '\f067';
     font-weight: 600;
 }
 
-.checkEl[aria-checked='true']+.textEl {
+.checkEl[aria-checked='true'] + .textEl {
     text-decoration: line-through;
 }
 
@@ -230,7 +236,7 @@ div{
     padding: 4px 7px;
 }
 
-.textEl[aria-label='listText']:focus+.delEl {
+.textEl[aria-label='listText']:focus + .delEl {
     display: block;
 }
 
@@ -263,8 +269,12 @@ div{
     margin: 20px auto;
     /* padding: 12px 20px; */
     padding: 10px 20px;
+    outline: none;
     transition: box-shadow .2s, transform .2s;
 }
+/* .note *{
+    outline: none;
+} */
 
 .header {
     width: 100%;
