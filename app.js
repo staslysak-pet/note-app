@@ -15,7 +15,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.get('/', async function(req, res){
     const note = await db.getNotes();
-	res.render('index', {title: 'NOTE APP', notes: note});
+    res.render('index', {title: 'NOTE APP', notes: note});
 });
 app.post('/', async function(req, res){
     await db.addNote(req.body);
