@@ -51,7 +51,7 @@ function noteFunc(e){
 
     switch(true){
         case cl.contains('createNote'):
-            setAttr(creater, {'data-type': 'note'});
+            creater.setAttribute('data-type', 'note')
 
             setHidden(creater, {
                 t: ['.createList'],
@@ -60,7 +60,7 @@ function noteFunc(e){
             break;
 
         case cl.contains('createList'):
-            setAttr(creater, {'data-type': 'list'});
+            creater.setAttribute('data-type', 'list')
 
             setHidden(creater, {
                 t: ['.createNote', '.createList'],
@@ -198,12 +198,6 @@ function resetCreater(){
 
 
 // -------------------------------------------------------- OTHER FUNCTIONS
-function setAttr(elem, attrs){
-    for(let key in attrs){
-        elem.setAttribute(key, attrs[key]);
-    }
-}
-
 function emptyHTML(...elems){
     elems.forEach(el => el.innerHTML = '')
 }
