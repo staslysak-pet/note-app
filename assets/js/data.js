@@ -50,53 +50,53 @@ const getNoteId = (note) => note.getAttribute('data-id')
 
 const API ={
     POST: async (dataEl) => {
-    try{
-        const data = await packData(dataEl);
-        const fetchObj = {
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            method: "POST",
-            body: JSON.stringify(data)
-        }
+        try{
+            const data = await packData(dataEl);
+            const fetchObj = {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                method: "POST",
+                body: JSON.stringify(data)
+            }
 
-        await fetch('/', fetchObj)
-            .then(() => window.location.href = '/')
-            .catch(err => console.log(err))
-    }catch(err){
-        console.log(err)
-    }
-},
+            await fetch('/', fetchObj)
+                .then(() => window.location.href = '/')
+                .catch(err => console.log(err))
+        }catch(err){
+            console.log(err)
+        }
+    },
     PUT: async (dataEl) => {
-    try{
-        const data = await packData(dataEl);
-        const id = await getNoteId(dataEl);
-        const fetchObj = {
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            method: "PUT",
-            body: JSON.stringify(data)
+        try{
+            const data = await packData(dataEl);
+            const id = await getNoteId(dataEl);
+            const fetchObj = {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                method: "PUT",
+                body: JSON.stringify(data)
+            }
+
+            await fetch(`/${id}`, fetchObj)
+                .then(() => window.location.href = '/')
+                .catch(err => console.log(err))
+        }catch(err){
+            console.log(err)
         }
-
-        await fetch(`/${id}`, fetchObj)
-            .then(() => window.location.href = '/')
-            .catch(err => console.log(err))
-    }catch(err){
-        console.log(err)
-    }
-},
+    },
     DELETE: async (dataEl) => {
-    try{
-        const id = await getNoteId(dataEl);
+        try{
+            const id = await getNoteId(dataEl);
 
-        await fetch(`/${id}`, { method: "DELETE" })
-            .then(() => window.location.href = '/')
-            .catch(err => console.log(err))
-    }catch(err){
-        console.log(err)
+            await fetch(`/${id}`, { method: "DELETE" })
+                .then(() => window.location.href = '/')
+                .catch(err => console.log(err))
+        }catch(err){
+            console.log(err)
+        }
     }
-}
 }
