@@ -5,8 +5,6 @@ const creater        = document.getElementById('creater'),
       controls       = document.getElementById('controls'),
       noNote         = document.querySelector('.no-note');
 
-
-
 // -------------------------------------------------------- NOTES LISTENERS
 let notes = document.querySelectorAll('.note');
 for(let note of notes){
@@ -16,7 +14,7 @@ for(let note of notes){
 // creater.addEventListener('click', noteFunc, false);
 
 function contenteditableFunc(e) {
-    
+
     let t  = e.target;
     let cl = t.classList;
 
@@ -28,7 +26,7 @@ function contenteditableFunc(e) {
         case cl.contains('header'):
             t.addEventListener('keydown', newLineFreeze);
             break;
-            
+
         case cl.contains('textEl'):
             if(t.getAttribute('aria-label') === 'listText'){
                 t.addEventListener('keydown', newLineFreeze);
@@ -53,49 +51,49 @@ function noteFunc(e){
 
     switch(true){
         case cl.contains('createNote'):
-                setAttr(creater, {'data-type': 'note'});
+            setAttr(creater, {'data-type': 'note'});
 
-                setHidden(creater, {
-                    t: ['.createList'], 
-                    f: standartCreaterReset
-                });
+            setHidden(creater, {
+                t: ['.createList'],
+                f: standartCreaterReset
+            });
             break;
 
         case cl.contains('createList'):
-                setAttr(creater, {'data-type': 'list'});
+            setAttr(creater, {'data-type': 'list'});
 
-                setHidden(creater, {
-                    t: ['.createNote', '.createList'], 
-                    f: [...standartCreaterReset, '.listCont']
-                });
+            setHidden(creater, {
+                t: ['.createNote', '.createList'],
+                f: [...standartCreaterReset, '.listCont']
+            });
             break;
-            
+
 
         case cl.contains('checkEl'):
-                checkListChange(t);
+            checkListChange(t);
             break;
 
         case cl.contains('delEl'):
-                p.remove();
+            p.remove();
             break;
 
         case cl.contains('edit'):
-                putData(this);
+            API.PUT(this);
             break;
 
         case cl.contains('add'):
-                postData(creater);
-                resetCreater();
+            API.POST(creater);
+            resetCreater();
             break;
 
         case cl.contains('cancel'):
-                resetCreater();
+            resetCreater();
             break;
 
         case cl.contains('delete'):
-                deleteData(this);
+            API.DELETE(this);
             break;
-            
+
         default:
             return;
     }
@@ -106,9 +104,7 @@ function noteFunc(e){
 
 // -------------------------------------------------------- CONTENTEDITABLE FUNCTIONS
 function newLineFreeze(evt){
-    if(evt.keyCode === 13){
-        evt.preventDefault();
-    }
+    if(evt.keyCode === 13){ evt.preventDefault() }
 }
 
 function newLineHandler(e){
@@ -116,13 +112,13 @@ function newLineHandler(e){
     if(!e.target.lastChild || e.target.lastChild.nodeName.toLowerCase() != 'br'){
        e.target.appendChild(document.createElement('br'));
     }
-   
+
     if (e.keyCode === 13) {
        e.preventDefault();
        const sel = window.getSelection();
        const range = sel.getRangeAt(0);
        const br = document.createElement('br');
-       
+
        range.deleteContents();
        range.insertNode(br);
        range.setStartAfter(br);
@@ -149,25 +145,11 @@ function checkListChange(t){
 function addListEl(e){
     if(!e.ctrlKey && !e.metaKey && !e.altKey && e.keyCode !== 13 && e.keyCode !== 9){
 
-        let [listEl, checkEl, textEl, delEl] = multiCreate('div', 4);
+        const { parentNode } = e.target;
+        const clone = parentNode.cloneNode(true)
 
-        listEl.classList.add('listEl');
-        checkEl.classList.add('checkEl');
-        textEl.classList.add('textEl');
-        delEl.classList.add('delEl');
-
-        setAttr(textEl, {
-            'contenteditable': true,
-            'placeholder': 'New TODO',
-            'role': 'textbox',
-            'aria-label': 'newTodo'
-        });
-
+        const textEl = clone.querySelector('.textEl');
         textEl.addEventListener('keydown', addListEl, false);
-        
-        listEl.appendChild(checkEl);
-        listEl.appendChild(textEl);
-        listEl.appendChild(delEl);
 
         this.previousSibling.setAttribute('aria-checked', false);
         this.removeAttribute('placeholder');
@@ -176,10 +158,9 @@ function addListEl(e){
         this.removeEventListener('keydown', addListEl);
         this.addEventListener('keydown', newLineFreeze)
 
-        this.parentNode.parentNode.appendChild(listEl);
+        this.parentNode.parentNode.appendChild(clone);
     }
     else{
-
         e.preventDefault();
     }
 }
@@ -193,7 +174,7 @@ function removeAllLists(){
     if(listCont){
         const l = listCont.children.length;
         const sel = '.listEl:not(:last-child)';
-            
+
         if(l > 1){
             const lists = listCont.querySelectorAll(sel);
             lists.forEach(list => list.remove());
@@ -209,12 +190,11 @@ function resetCreater(){
     emptyHTML(createHeader, createNote);
 
     setHidden(creater, {
-        t: ['.listCont', '.createHeader', '#controls'], 
+        t: ['.listCont', '.createHeader', '#controls'],
         f: ['.createList', '.createNote']
     });
 }
 // /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 
 
 // -------------------------------------------------------- OTHER FUNCTIONS
@@ -228,21 +208,7 @@ function emptyHTML(...elems){
     elems.forEach(el => el.innerHTML = '')
 }
 
-function multiCreate(type, num){
-    const arr = [];
-    for(let i = 0; i < num; i++){
-        arr.push(document.createElement(type));
-    }
-    return arr;
-}
-
 function setHidden(parent, obj){
-    if(obj.t){
-        obj.t.forEach(el => parent.querySelector(el).hidden = true);
-    }
-        
-    if(obj.f){
-        obj.f.forEach(el => parent.querySelector(el).hidden = false);
-    }
+    if(obj.t) obj.t.forEach(el => parent.querySelector(el).hidden = true)
+    if(obj.f) obj.f.forEach(el => parent.querySelector(el).hidden = false)
 }
-// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////

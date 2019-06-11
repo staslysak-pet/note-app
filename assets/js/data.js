@@ -1,68 +1,84 @@
 // PACK ALL DATA TO MONGO DATABASE
 function packData(note){
-    
+
     const type = note.getAttribute('data-type');
+    const header= note.querySelector('.header').innerText;
+    const OBJ = {
+        type,
+        header
+    }
     const rExp  = /<br\s*[\/]?>/gi;
     const rExp2 = /&nbsp;/gi;
 
     if(type === 'note'){
-        const headerData   = note.querySelector('.header').innerText;
         const noteTextData = note.querySelector('.noteText').innerHTML;
         const text = noteTextData.replace(rExp, '\n').replace(rExp2, '');
 
         return {
-            type: type,
-            header: headerData,
+            ...OBJ,
             noteText: text
         };
     }
     if(type === 'list'){
-        const headerData = note.querySelector('.header').innerText;
-        const lists      = note.querySelectorAll('.textEl:not([aria-label="newTodo"])');
+        const lists = note.querySelectorAll('.textEl');
 
-        const normalArr  = [];
-        const checkedArr = [];
+        const unchecked = [];
+        const checked = [];
 
-        for(let i = 0;i < lists.length; i++){
+        for(let i = 0;i < lists.length - 1; i++){
 
-            let text = lists[i].innerText;
-
-            if(lists[i].previousElementSibling.getAttribute('aria-checked') === 'true'){
-                checkedArr.push(text);
+            if(lists[i].previousSibling.getAttribute('aria-checked') === 'true'){
+                checked.push(lists[i].innerText);
             }else{
-                normalArr.push(text);
+                unchecked.push(lists[i].innerText);
             }
+
         }
 
         return {
-            type: type,
-            header: headerData,
+            ...OBJ,
             list: {
-                normal: normalArr,
-                checked: checkedArr
+                unchecked,
+                checked
             }
         };
     }
 }
 
 // GET ID
-function getNoteId(note){
-    return note.getAttribute('data-id');
-}
+const getNoteId = (note) => note.getAttribute('data-id')
 
+const API ={
+    POST: async (dataEl) => {
+    try{
+        const data = await packData(dataEl);
+        const fetchObj = {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: "POST",
+            body: JSON.stringify(data)
+        }
 
-// PUT REQUEST
-async function putData(dataEl){
-    try{    
-        const noteData  = await packData(dataEl);
-        const id        = await getNoteId(dataEl);
-        const fetchObj  = {
+        await fetch('/', fetchObj)
+            .then(() => window.location.href = '/')
+            .catch(err => console.log(err))
+    }catch(err){
+        console.log(err)
+    }
+},
+    PUT: async (dataEl) => {
+    try{
+        const data = await packData(dataEl);
+        const id = await getNoteId(dataEl);
+        const fetchObj = {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
             method: "PUT",
-            body: JSON.stringify(noteData)
+            body: JSON.stringify(data)
         }
 
         await fetch(`/${id}`, fetchObj)
@@ -71,39 +87,16 @@ async function putData(dataEl){
     }catch(err){
         console.log(err)
     }
-}
-
-// DELETE REQUEST
-async function deleteData(dataEl){
+},
+    DELETE: async (dataEl) => {
     try{
         const id = await getNoteId(dataEl);
 
-        await fetch(`/${id}`, {method: "DELETE"})
-            .then(() => window.location.href = '/')
-            .catch(err => console.log(err))
-    }catch(err){
-        console.log(err)
-    }    
-}
-
-// POST REQUEST
-async function postData(dataEl){
-    try{
-        const noteData = await packData(dataEl);
-        const fetchObj = {
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            method: "POST",
-            body: JSON.stringify(noteData)
-        }
-        console.log(noteData);
-
-        await fetch('/', fetchObj)
+        await fetch(`/${id}`, { method: "DELETE" })
             .then(() => window.location.href = '/')
             .catch(err => console.log(err))
     }catch(err){
         console.log(err)
     }
+}
 }

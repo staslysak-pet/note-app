@@ -18,7 +18,7 @@
             .note(data-type=`${item.type}` data-id=`${item['_id']}` tabindex='0')
                 .header(contenteditable='true' placeholder='Enter note header' role='textbox')= item.header
                 .listCont
-                    each list in item.list.normal
+                    each list in item.list.unchecked
                         .listEl
                             .checkEl(aria-checked='false')
                             .textEl(contenteditable='true' role='textbox' aria-label='listText')= list
@@ -32,7 +32,7 @@
                         .checkEl
                         .textEl(contenteditable='true' placeholder='New TODO' role='textbox' aria-label='newTodo')
                         .delEl
-                        
+
                 .controls
                     .toolbar
                         .toolbarBtn.setTime(aria-label='time')
